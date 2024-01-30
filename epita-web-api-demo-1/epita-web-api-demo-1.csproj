@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebApp.Auth\WebApp.Auth.csproj" />
     <ProjectReference Include="..\WebApp.Domain\WebApp.Domain.csproj" />
     <ProjectReference Include="..\WebApp.Services\WebApp.Services.csproj" />
   </ItemGroup>
