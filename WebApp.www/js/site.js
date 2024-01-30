@@ -27,4 +27,20 @@ function LoadUserProfiles() {
 
 function RenderDataAsTable(data) {
 
+
+    let htmlString = [];
+
+    for(const profile of data) {
+
+        const {name, governmentId, ...rest} = profile;
+
+
+        htmlString.push("<tr>");
+       
+        htmlString.push(`<td>${name}</td>`);
+        htmlString.push(`<td>${governmentId}</td>`);
+        
+        htmlString.push("</tr>");
+    }
+    $('tbody#TableOfUserProfiles').append(htmlString.join(''));
 }
