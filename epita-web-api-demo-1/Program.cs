@@ -1,3 +1,4 @@
+using Microsoft.OpenApi.Models;
 using WebApp.Auth.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,42 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
+
+// Create a security definition
+builder.Services.AddSwaggerGen(options =>
+{
+
+options.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme()
+{
+    Description = "Api Key to secure the API",
+    Type = SecuritySchemeType.ApiKey,
+    Name = AuthConfig.ApiKeyHeader,
+    In = ParameterLocation.Header,
+    Scheme = "ApiKeyScheme"
+
+});
+
+// Set up a scheme
+var scheme = new OpenApiSecurityScheme()
+{
+    Reference = new OpenApiReference()
+    {
+        Type = ReferenceType.SecurityScheme,
+        Id = "ApiKey"
+    },
+    In = ParameterLocation.Header
+};
+
+var requirement = new OpenApiSecurityRequirement()
+    {
+            { scheme, new List<string>()}
+    };
+
+options.AddSecurityRequirement(requirement);
+
+});
+
 
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowAll", builder =>
