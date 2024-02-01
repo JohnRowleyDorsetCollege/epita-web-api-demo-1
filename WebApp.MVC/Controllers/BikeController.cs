@@ -12,7 +12,7 @@ namespace WebApp.MVC.Controllers
         private string contract;
         private string apiKey;
         string contractAndKey;
-        Uri baseAddress0 = new Uri("https://api.jcdecaux.com/vls/v1/stations?contract=Dublin&apiKey=3aa66c7d23f6a40af417fc87ba25d34c2d285d4a");
+     //  Uri baseAddress0 = new Uri("https://api.jcdecaux.com/vls/v1/stations?contract=Dublin&apiKey=3aa66c7d23f6a40af417fc87ba25d34c2d285d4a");
         Uri baseAddress = new Uri("https://api.jcdecaux.com/vls/v1/stations");
 
         private readonly HttpClient _httpClient;
