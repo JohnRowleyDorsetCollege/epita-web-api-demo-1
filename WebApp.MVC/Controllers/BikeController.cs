@@ -9,7 +9,11 @@ namespace WebApp.MVC.Controllers
     public class BikeController : Controller
     {
 
-        Uri baseAddress = new Uri("https://api.jcdecaux.com/vls/v1/stations?contract=Dublin&apiKey=3aa66c7d23f6a40af417fc87ba25d34c2d285d4a");
+        private string contract;
+        private string apiKey;
+        string contractAndKey;
+        Uri baseAddress0 = new Uri("https://api.jcdecaux.com/vls/v1/stations?contract=Dublin&apiKey=3aa66c7d23f6a40af417fc87ba25d34c2d285d4a");
+        Uri baseAddress = new Uri("https://api.jcdecaux.com/vls/v1/stations");
 
         private readonly HttpClient _httpClient;
 
@@ -17,13 +21,17 @@ namespace WebApp.MVC.Controllers
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = baseAddress;
+            contract = "Dublin";
+            apiKey = "3aa66c7d23f6a40af417fc87ba25d34c2d285d4a";
+            contractAndKey = $"contract={contract}&apiKey={apiKey}";
         }
         // GET: BikeController
         public ActionResult Index()
         {
             List<BikeStation> bikeStations = new();
 
-            HttpResponseMessage httpResponseMessage = _httpClient.GetAsync(baseAddress).Result;
+            Console.WriteLine($"{baseAddress}?{contractAndKey}");
+            HttpResponseMessage httpResponseMessage = _httpClient.GetAsync($"{baseAddress}?{contractAndKey}").Result;
 
 
             if (httpResponseMessage.IsSuccessStatusCode)
@@ -39,6 +47,23 @@ namespace WebApp.MVC.Controllers
         // GET: BikeController/Details/5
         public ActionResult Details(int id)
         {
+            BikeStation bikeStation = new();
+
+            Console.WriteLine($"{baseAddress}/{id}?{contractAndKey}");
+            HttpResponseMessage httpResponseMessage = _httpClient.GetAsync($"{baseAddress}/{id}?{contractAndKey}").Result;
+
+
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                string data = httpResponseMessage.Content.ReadAsStringAsync().Result;
+                bikeStation = JsonConvert.DeserializeObject<BikeStation>(data);
+            }
+
+
+            return View(bikeStation);
+
+
+
             return View();
         }
 
