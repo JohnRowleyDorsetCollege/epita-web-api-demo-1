@@ -22,7 +22,18 @@ namespace WebApp.Domain.Models
         public string status { get; set; }
         public long last_update { get; set; }
     }
-
+    public class BikeStationDTO
+    {
+     
+        public string contract_name { get; set; }
+        public string name { get; set; }
+        public string address { get; set; }
+       
+        public int bike_stands { get; set; }
+        public int available_bike_stands { get; set; }
+        public int available_bikes { get; set; }
+      
+    }
     public class Position
     {
         public float lat { get; set; }

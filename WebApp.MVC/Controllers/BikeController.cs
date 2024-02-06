@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -17,13 +18,16 @@ namespace WebApp.MVC.Controllers
 
         private readonly HttpClient _httpClient;
 
-        public BikeController()
+        private readonly IMapper _mapper;
+
+        public BikeController(IMapper mapper)
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = baseAddress;
             contract = "Dublin";
             apiKey = "3aa66c7d23f6a40af417fc87ba25d34c2d285d4a";
             contractAndKey = $"contract={contract}&apiKey={apiKey}";
+            _mapper = mapper;
         }
         // GET: BikeController
         public ActionResult Index()
@@ -60,11 +64,14 @@ namespace WebApp.MVC.Controllers
             }
 
 
-            return View(bikeStation);
+            var dto = _mapper.Map<BikeStationDTO>(bikeStation);
+
+            //return View(bikeStation);
+            return View(dto);
 
 
 
-            return View();
+
         }
 
         // GET: BikeController/Create
