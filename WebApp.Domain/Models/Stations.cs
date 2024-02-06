@@ -24,7 +24,7 @@ namespace WebApp.Domain.Models
     }
     public class BikeStationDTO
     {
-     
+        public int BikeStationId { get; set; }
         public string contract_name { get; set; }
         public string name { get; set; }
         public string address { get; set; }
