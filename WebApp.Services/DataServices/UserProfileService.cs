@@ -4,7 +4,7 @@ namespace WebApp.Services.DataServices
 {
     public static class UserProfileService
     {
-        public static List<UserProfile> Profiles()
+        public static async Task<List<UserProfile>> Profiles()
         {
             List<UserProfile> listOfProfiles = new List<UserProfile>();
             for (int i = 0; i < 25; i++)
@@ -18,7 +18,7 @@ namespace WebApp.Services.DataServices
                 profile.Biography = String.Join("", Faker.Lorem.Sentences(3));
                 listOfProfiles.Add(profile);
             }
-
+            await Task.Delay(5000); // simulated delay of 5 seconds
             return listOfProfiles;
         }
     }
